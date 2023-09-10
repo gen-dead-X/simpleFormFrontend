@@ -106,6 +106,20 @@ nav a:hover {
   margin: 0 1rem;
   transition: all 0.3s ease-in-out;
 }
+.form-data p span {
+  color: rgb(225, 225, 225);
+  font-weight: bold;
+}
+.form-data p {
+  color: rgb(226, 228, 255);
+  transition: all 0.3s ease-in;
+}
+.form-data p:hover {
+  color: black;
+  font-weight: bold;
+  transform: scale(1.1) translateX(10px);
+  cursor: pointer;
+}
 .all-forms-container .form-button-conntainer button:hover {
   background-color: rgb(36, 36, 36);
   color: white;

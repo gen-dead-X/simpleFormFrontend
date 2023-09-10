@@ -47,6 +47,12 @@ async function handleInitialLoad() {
 function appendForData(data) {
   data.forEach((form) => {
     const formDiv = document.createElement("div");
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const createdAtForm = form.createdAt
+      ? new Date(form.createdAt)
+      : new Date();
+    const creationDate = createdAtForm.toLocaleDateString(undefined, options);
+
     formDiv.classList.add("form-data");
     if (colorIndex === colorsArray.length) {
       colorIndex = 0;
@@ -89,14 +95,14 @@ function appendForData(data) {
     formButtonDiv.appendChild(editButton);
     formButtonDiv.appendChild(deleteButton);
 
-    username.textContent = `Username: ${form.username}`;
-    email.textContent = `Email: ${form.email}`;
-    address.textContent = `Address: ${form.address}`;
-    phoneNumber.textContent = `Phone Number: ${form.phoneNumber}`;
-    gender.textContent = `Gender: ${form.gender}`;
-    department.textContent = `Department: ${form.department}`;
-    createdAt.textContent = `Created At: ${form.createdAt}`;
-    userId.textContent = `User Id: ${form.userId}`;
+    username.innerHTML = `<span>Username</span>: ${form.username}`;
+    email.innerHTML = `<span>Email</span>: ${form.email}`;
+    address.innerHTML = `<span>Address</span>: ${form.address}`;
+    phoneNumber.innerHTML = `<span>Phone Number</span>: ${form.phoneNumber}`;
+    gender.innerHTML = `<span>Gendee</span>: ${form.gender}`;
+    department.innerHTML = `<span>Department</span>: ${form.department}`;
+    createdAt.innerHTML = `<span>Created At</span>: ${creationDate}`;
+    userId.innerHTML = `<span>User Id</span>: ${form.userId}`;
     editButton.textContent = "Edit";
     deleteButton.textContent = "Delete";
 

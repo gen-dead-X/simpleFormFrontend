@@ -1,9 +1,27 @@
 const allFormContainer = document.querySelector(".all-forms-container");
 const body = document.querySelector("body");
 const formContainer = document.querySelector(".edit-form-container");
+const form = document.querySelector("form");
+
+const colorsArray = [
+  "#70cc54b9",
+  "#f0e890b9",
+  "#5482ccb9",
+  "#c0cc54b9",
+  "#de62b9b9",
+  "#6b83cfb9",
+  "#50b58eb9",
+];
+
+let colorIndex = 0;
 
 (async () => {
+  handleInitialLoad();
+})();
+
+async function handleInitialLoad() {
   try {
+    console.log("Called");
     let response = await fetch("http://localhost:4000/get-form-datas", {
       method: "GET",
       headers: {
@@ -21,12 +39,18 @@ const formContainer = document.querySelector(".edit-form-container");
   } catch (error) {
     console.log(error);
   }
-})();
+}
 
 function appendForData(data) {
   data.forEach((form) => {
     const formDiv = document.createElement("div");
     formDiv.classList.add("form-data");
+    if (colorIndex === colorsArray.length) {
+      colorIndex = 0;
+    }
+
+    formDiv.style.backgroundColor = colorsArray[colorIndex++];
+
     const username = document.createElement("p");
     const email = document.createElement("p");
     const createdAt = document.createElement("p");
@@ -47,7 +71,7 @@ function appendForData(data) {
     );
     deleteButton.setAttribute(
       "onClick",
-      `deleteFormHandler${JSON.stringify(form._id)})`
+      `deleteFormHandler(${JSON.stringify(form._id)})`
     );
 
     formDiv.appendChild(username);
@@ -77,10 +101,32 @@ function appendForData(data) {
   });
 }
 
-async function editFormHandler(id) {
+async function deleteFormHandler(id) {
   try {
     console.log(id);
 
+    let response = await postData(
+      "http://localhost:4000/delete-form/" + id,
+      {},
+      "DELETE"
+    );
+
+    response = await response.json();
+
+    console.log(response);
+
+    if (!response.success) {
+      throw new Error("Error: Failed to delete data");
+    }
+
+    window.location.reload();
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+async function editFormHandler(id) {
+  try {
     let response = await fetch(`http://localhost:4000/get-form-data/${id}`, {
       method: "GET",
       headers: {
@@ -94,7 +140,7 @@ async function editFormHandler(id) {
       throw new Error("Error: Failed to fetch data");
     }
 
-    body.classList.toggle("stop-scrolling");
+    allFormContainer.classList.toggle("visually-hidden");
     formContainer.classList.toggle("visually-hidden");
 
     appendEditForData(response.data);
@@ -107,9 +153,6 @@ async function editFormHandler(id) {
 
 function appendEditForData(data) {
   const userImputs = document.querySelectorAll(".user-input");
-  const selectedOptions = document.querySelectorAll("select");
-
-  const form = document.querySelector("form");
 
   form.setAttribute("data-id", data._id);
 
@@ -122,6 +165,7 @@ function appendEditForData(data) {
 
 async function handleFormEdit(event) {
   event.preventDefault();
+  const formValueObject = {};
 
   const userImputs = document.querySelectorAll(".user-input");
   const selectedOptions = document.querySelectorAll("select");
@@ -139,25 +183,36 @@ async function handleFormEdit(event) {
     formValueObject[option.id] = option.value;
   });
 
-  console.log(formId);
+  console.log({ formValueObject });
 
-  const response = await postData(
-    "http://localhost:4000/edit-form-submission" + formId,
-    formValueObject
+  let response = await postData(
+    "http://localhost:4000/edit-form/" + formId,
+    formValueObject,
+    "PUT"
   );
+
+  response = await response.json();
+
+  console.log(response);
 
   if (response) {
     console.log(response);
     console.log("Succesfully submitted");
+    allFormContainer.classList.toggle("visually-hidden");
+    formContainer.classList.toggle("visually-hidden");
+    handleInitialLoad();
+    window.location.reload();
   }
 }
 
-async function postData(url = "", data = {}) {
+async function postData(url = "", data = {}, method = "POST") {
   const response = await fetch(url, {
-    method: "POST",
+    method,
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formValueObject),
+    body: JSON.stringify(data),
   });
+
+  return response;
 }

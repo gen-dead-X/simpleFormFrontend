@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="../assets/css/allForms.css" />
   </head>
   <body>
+    <nav>
+      <a href="../index.html">Add a New Form</a>
+    </nav>
+
+    <div class="modal-container visually-hidden">
+      <div class="modal">
+        <h2>Are you Sure?</h2>
+        <div>
+          <button onclick="handleConfirmDeletion()">Delete</button>
+          <button onclick="window.location.reload()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
     <div class="visually-hidden visually-absolute edit-form-container">
       <form id="myForm" class="my-form" onsubmit="handleFormEdit(event)">
         <div>

@@ -18,9 +18,10 @@ async function handleSubmit(event) {
     formValueObject
   );
 
-  if (response) {
+  if (response.success) {
     console.log(response);
     console.log("Succesfully submitted");
+    window.location.replace("/src/pages/allForms.html");
   }
 }
 

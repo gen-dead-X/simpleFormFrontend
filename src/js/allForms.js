@@ -2,6 +2,9 @@ const allFormContainer = document.querySelector(".all-forms-container");
 const body = document.querySelector("body");
 const formContainer = document.querySelector(".edit-form-container");
 const form = document.querySelector("form");
+const modelContainer = document.querySelector(".modal-container");
+
+let currentSelectedFormId = null;
 
 const colorsArray = [
   "#70cc54b9",
@@ -101,12 +104,20 @@ function appendForData(data) {
   });
 }
 
-async function deleteFormHandler(id) {
+function deleteFormHandler(id) {
   try {
-    console.log(id);
+    modelContainer.classList.toggle("visually-hidden");
 
-    let response = await postData(
-      "http://localhost:4000/delete-form/" + id,
+    currentSelectedFormId = id;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+async function handleConfirmDeletion() {
+  try {
+    response = await postData(
+      "http://localhost:4000/delete-form/" + currentSelectedFormId,
       {},
       "DELETE"
     );
@@ -118,6 +129,8 @@ async function deleteFormHandler(id) {
     if (!response.success) {
       throw new Error("Error: Failed to delete data");
     }
+
+    modelContainer.classList.toggle("visually-hidden");
 
     window.location.reload();
   } catch (error) {

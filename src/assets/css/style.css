@@ -31,7 +31,11 @@ nav a {
 nav a:hover {
   background-color: rgb(3, 3, 121);
 }
-
+.my-form,
+h1 {
+  background: rgba(0, 0, 0, 0.479);
+  backdrop-filter: blur(5px);
+}
 .my-form {
   padding: 1rem;
   border-radius: 1rem;

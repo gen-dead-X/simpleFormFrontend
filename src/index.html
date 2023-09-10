@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="./pages/allForms.html">All Forms</a></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </nav>
+    <h1>This is a Form</h1>
+
+    <form id="myForm" class="my-form" onsubmit="handleSubmit(event)">
+      <div>
+        <label for="username">Username : </label>
+        <input id="username" type="text" class="user-input" />
+      </div>
+      <div>
+        <label for="">User ID : </label>
+        <input id="userId" type="text" class="user-input" />
+      </div>
+      <div>
+        <label for="">Phone Number : </label>
+        <input id="phoneNumber" type="text" class="user-input" />
+      </div>
+      <div>
+        <label for="">Gender : </label>
+        <select name="" id="gender">
+          <option>Select</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div>
+        <label for="">Email : </label>
+        <input type="email" id="email" class="user-input" />
+      </div>
+      <div>
+        <label for="">Department :</label>
+        <select id="department">
+          <option>Select</option>
+          <option value="CSE">CSE</option>
+          <option value="IT">IT</option>
+          <option value="ECE">ECE</option>
+          <option value="EE">EE</option>
+          <option value="AEIE">AEIE</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+      <div>
+        <label for="">Address : </label>
+        <input id="address" type="text" class="user-input" />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+
+    <script src="./js/main.js"></script>
+  </body>
+</html>

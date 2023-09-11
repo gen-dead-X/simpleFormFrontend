@@ -5,10 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>All Forms</title>
     <link rel="stylesheet" href="../assets/css/allForms.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="shortcut icon"
+      href="../assets/favicon.svg"
+      type="image/x-icon"
+    />
   </head>
   <body>
     <nav>
       <a href="../index.html">Add a New Form</a>
+      <form class="search-container" onsubmit="handleSearch(event)">
+        <input type="text" id="search" placeholder="Search" />
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
     </nav>
 
     <div class="modal-container visually-hidden">

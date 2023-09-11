@@ -12,6 +12,10 @@ body {
 }
 nav {
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
 }
 nav a {
   all: unset;
@@ -27,6 +31,31 @@ nav a:hover {
   background-color: rgb(4, 63, 157);
   color: white;
 }
+.search-container {
+  display: flex;
+  gap: 1rem;
+}
+.search-container input {
+  all: unset;
+  background-color: rgba(0, 0, 0, 0.368);
+  backdrop-filter: blur(5px);
+  border: 2px solid white;
+  border-style: dotted;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+}
+.search-container input {
+  margin: 0;
+}
+@media screen and (min-width: 540px) {
+  nav {
+    flex-direction: row;
+  }
+  .search-container {
+    justify-content: flex-end;
+  }
+}
+
 .modal-container {
   position: fixed;
   top: 0;

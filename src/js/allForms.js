@@ -3,6 +3,10 @@ const body = document.querySelector("body");
 const formContainer = document.querySelector(".edit-form-container");
 const form = document.querySelector("form");
 const modelContainer = document.querySelector(".modal-container");
+const searchInput = document.querySelector("#search");
+
+let allForms = [];
+let allFormsCached = [];
 
 let currentSelectedFormId = null;
 
@@ -22,6 +26,23 @@ let colorIndex = 0;
   handleInitialLoad();
 })();
 
+async function handleSearch(event) {
+  event.preventDefault();
+  console.log(searchInput.value);
+
+  const filteredForms = allFormsCached.filter((form) => {
+    const formValues = Object.values(form);
+
+    return formValues.some((value) => {
+      if (typeof value === "string") {
+        return value.toLowerCase().includes(searchInput.value.toLowerCase());
+      }
+    });
+  });
+
+  appendForData(filteredForms);
+}
+
 async function handleInitialLoad() {
   try {
     console.log("Called");
@@ -37,14 +58,19 @@ async function handleInitialLoad() {
     if (!response.success) {
       throw new Error("Error: Failed to fetch data");
     }
+    allForms = response.data;
+    allFormsCached = response.data;
 
-    appendForData(response.data);
+    appendForData(allForms);
   } catch (error) {
     console.log(error);
   }
 }
 
 function appendForData(data) {
+  console.log("Append called");
+  allFormContainer.innerHTML = "";
+
   data.forEach((form) => {
     const formDiv = document.createElement("div");
     const options = { year: "numeric", month: "long", day: "numeric" };
